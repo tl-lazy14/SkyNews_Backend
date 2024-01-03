@@ -27,6 +27,8 @@ public class User implements UserDetails {
     private String role;
     private String editorCategory;
 
+    public String getName() { return username; }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));

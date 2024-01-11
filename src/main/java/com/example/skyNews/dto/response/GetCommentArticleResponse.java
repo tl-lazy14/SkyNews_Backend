@@ -5,14 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetUserByIdResponse {
-    private Long id;
-    private String username;
-    private String email;
-    private String role;
-    private String editorCategory;
+public class GetCommentArticleResponse {
+    private CommentInfoResponse parentComment;
+    private List<CommentInfoResponse> childComments;
 }

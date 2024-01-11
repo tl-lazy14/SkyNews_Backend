@@ -26,12 +26,12 @@ public class Notification {
 
     @ManyToOne
     @JoinColumn(name = "like_id")
-    private Like like;
+    private Like likeComment;
 
     @ManyToOne
     @JoinColumn(name = "reply_comment_id")
     private Comment replyComment;
 
     private Date timestamp;
-    private Boolean isNew;
+    private Integer isNew;
 }

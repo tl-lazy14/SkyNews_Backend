@@ -22,12 +22,10 @@ public class Article {
     private String content;
     private String location;
     private Date dateNews;
+    private Long authorId;
+    private String authorName;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private User author;
-
-    private Boolean isHot;
+    private Integer isHot;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

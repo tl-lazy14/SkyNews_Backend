@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,8 +35,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private static List<String> refreshTokens = new ArrayList<>();
     @Override
     public User register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email đã tồn tại");
+        if (userRepository.existsByEmailAndRole(request.getEmail(), request.getRole())) {
+            throw new RuntimeException("Email đã tồn tại, vui lòng chọn email khác.");
         }
         User newUser = new User();
         newUser.setUsername(request.getUsername());
@@ -123,6 +124,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = userRepository.findById(id).orElseThrow();
         if (!bCryptPasswordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             throw new RuntimeException("Mật khẩu hiện tại không đúng");
+        } else if (Objects.equals(request.getCurrentPassword(), request.getNewPassword())) {
+            throw new RuntimeException("Mật khẩu mới cần khác với mật khẩu hiện tại");
         }
         String newPassword = request.getNewPassword();
         String hashedNewPassword = bCryptPasswordEncoder.encode(newPassword);
